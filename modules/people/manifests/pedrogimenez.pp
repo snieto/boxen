@@ -42,7 +42,7 @@ class people::pedrogimenez {
 
   vim::bundle { [
     'scrooloose/syntastic',
-    'scrooloose/nerdtree'
+    'scrooloose/nerdtree',
     'godlygeek/tabular',
     'airblade/vim-gitgutter',
     'vim-ruby/vim-ruby',

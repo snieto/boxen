@@ -15,9 +15,7 @@ class people::pedrogimenez {
   include osx::dock::autohide
   include osx::dock::clear_dock
   include osx::global::expand_save_dialog
-  include osx::dock::icon_size
   include osx::global::key_repeat_rate
-  include osx::global::key_repeat_delay
 
   class { 'osx::global::key_repeat_delay':
     delay => 0

@@ -3,9 +3,18 @@ class people::pedrogimenez {
   $my       = "${home}/my"
   $dotfiles = "${my}/.dotfiles"
 
+  file { $my:
+    ensure => "directory",
+  }
+
   repository { $dotfiles:
     source  => 'pedrogimenez/dotfiles',
     require => File[$my]
+  }
+
+  file { "${home}/.zshrc":
+    ensure => 'link',
+    target => "${dotfiles}/.zshrc"
   }
 
   # OS X
@@ -15,10 +24,13 @@ class people::pedrogimenez {
   include osx::dock::autohide
   include osx::dock::clear_dock
   include osx::global::expand_save_dialog
-  include osx::global::key_repeat_rate
+  
+  class { 'osx::global::key_repeat_rate':
+    rate => 0 
+  }
 
   class { 'osx::global::key_repeat_delay':
-    delay => 0
+    delay => 15
   }
 
   class { 'osx::dock::icon_size': 
@@ -27,6 +39,8 @@ class people::pedrogimenez {
 
   # DEV
   include openssl
+  include xquartz
+  include python
   include php::5_4
   include postgresql
   include virtualbox
@@ -37,8 +51,10 @@ class people::pedrogimenez {
   include zsh
   include clojure
   include vim
+  include macvim
 
   vim::bundle { [
+    'rizzatti/funcoo.vim',
     'scrooloose/syntastic',
     'scrooloose/nerdtree',
     'godlygeek/tabular',

@@ -17,7 +17,10 @@ class people::pedrogimenez {
     target => "${dotfiles}/.zshrc"
   }
 
-  # OS X
+  # required for nodejs
+  class { 'nodejs::global': version => 'v0.10.5' }
+
+  # os x settings
   include osx::finder::unhide_library
   include osx::finder::empty_trash_securely
   include osx::finder::show_external_hard_drives_on_desktop
@@ -37,21 +40,18 @@ class people::pedrogimenez {
     size => 48
   }
 
-  # DEV
+  # dev
   include openssl
   include xquartz
   include python
   include php::5_4
-  include postgresql
-  include virtualbox
   include java
+  include virtualbox
   include heroku
-  include iterm2::stable
   include wget
   include zsh
-  include clojure
+  include ctags
   include vim
-  include macvim
 
   vim::bundle { [
     'rizzatti/funcoo.vim',
@@ -61,12 +61,9 @@ class people::pedrogimenez {
     'airblade/vim-gitgutter',
     'vim-ruby/vim-ruby',
     'rizzatti/dash.vim',
-    'flazz/vim-colorschemes',
     'tpope/vim-endwise',
     'Townk/vim-autoclose',
-    'Lokaltog/powerline',
-    'tpope/vim-fugitive',
-    'sjl/badwolf'
+    'tpope/vim-fugitive'
   ]: }
 
   file { "${vim::vimrc}":
@@ -74,20 +71,15 @@ class people::pedrogimenez {
     require => Repository["${dotfiles}"]
   }
 
-  include ctags
-  include github_for_mac
-
-  # APPS
+  # apps 
   include transmit
   include vlc
   include onepassword
   include dropbox
-  include textual
-  include brow
-  include calibre
   include chrome
   include transmission
   include alfred
   include firefox
   include propane
+  include github_for_mac
 }
